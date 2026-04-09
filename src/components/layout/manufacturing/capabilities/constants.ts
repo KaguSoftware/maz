@@ -11,6 +11,7 @@ export const MANUFACTURING_CONTENT: ManufacturingContent = {
 		{ id: 4, translationKey: "Capabilities.colA.items.4" },
 		{ id: 5, translationKey: "Capabilities.colA.items.5" },
 		{ id: 6, translationKey: "Capabilities.colA.items.6" },
+		{ id: 7, translationKey: "Capabilities.colA.items.7" },
 	],
 	useCasesTitle: "Capabilities.colA.useCasesTitle",
 	useCases: [

@@ -24,15 +24,15 @@ export const PHOTOSIMAGES: Photos[] = [
         href: "/projects/renoV2",
     },
     {
-        photo: { src: "/Vrock3.2.jpeg", alt: "2nd" },
+        photo: { src: "/hs5.jpeg", alt: "2nd" },
         tag: {
-            text: "MasterPiece.tags.private",
+            text: "MasterPiece.tags.design",
             className:
-                "text-center px-3 py-2 bg-blue-700 rounded-xl text-white",
+                "text-center px-3 py-2 bg-gray-700 rounded-xl text-white ",
         },
         location: { text: "MasterPiece.locations.riyadh", icon: MapPin },
         text: "MasterPiece.projects.p2",
-        href: "/projects/Vrock",
+        href: "/projects/Lime",
     },
     {
         photo: { src: "/IMG_0064.webp", alt: "3rd" },

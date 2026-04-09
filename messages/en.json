@@ -47,7 +47,7 @@
         "title": "Straight to construction",
         "description": "I produce the materials. This ensure strict quality control from raw stones to the final polish in your property while also ensuring the most competitive prices on the market",
         "list": {
-            "item1": "Direct sourcing of Granite, Basalt, Marble and Limestone",
+            "item1": "Direct sourcing of Natural Rock, Granite, Basalt, Marble and Limestone",
             "item2": "Custom cutting and finishing facility",
             "item3": "In-house structural engineering team"
         }
@@ -62,8 +62,8 @@
         },
         "projects": {
             "p1": "Private villa renovation",
-            "p2": "Finishing & Decor",
-            "p3": "Saudi Television station",
+            "p2": "Limestone Hardscape",
+            "p3": "TV Tower Plaza",
             "p4": "King Faisal university"
         },
         "locations": {
@@ -290,7 +290,8 @@
                 "3": "Edge profiling & detailing for clean joins and premium finishes",
                 "4": "Surface finishes to match the look and performance your project needs",
                 "5": "CNC cutting for complex geometry and repeatable accuracy",
-                "6": "Batch consistency with controlled selection and sorting"
+                "6": "Batch consistency with controlled selection and sorting",
+                "7": "Cut to size on request — every piece processed to your exact dimensions"
             },
             "useCasesTitle": "Typical use cases",
             "useCases": {
