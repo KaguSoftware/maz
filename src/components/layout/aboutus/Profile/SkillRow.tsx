@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { SkillItem } from "./types";
+import { useTranslations } from "next-intl";
 
 interface SkillRowProps {
 	skill: SkillItem;
@@ -9,34 +10,51 @@ interface SkillRowProps {
 }
 
 export const SkillRow = ({ skill, index }: SkillRowProps) => {
+    const t = useTranslations();
 	return (
-		<div className="w-full">
-			{/* Header: Icon + Name + Level */}
-			<div className="mb-3 flex items-end justify-between">
-				<div className="flex items-center gap-3">
-					<skill.icon className="text-blue-600" size={24} />
-					<span className="font-bold text-neutral-800">
-						{skill.label}
-					</span>
+		<div className="relative w-full group">
+			{/* 1. The Box Container */}
+			<div className="relative flex items-center justify-between p-6 rounded-xl bg-white border border-neutral-100/50 shadow-sm">
+				{/* Content: Icon & Name */}
+				<div className="flex items-center gap-4">
+					<div className="p-2.5 bg-cyan-950 rounded-lg shadow-sm text-logocolor">
+						<skill.icon size={24} />
+					</div>
+					<div className="flex flex-col">
+						<span className="font-bold text-lg text-sky-950">
+							{t(skill.label)}
+						</span>
+						<span className="text-xs font-medium text-sky-950 uppercase tracking-wider">
+							{t(skill.level)}
+						</span>
+					</div>
 				</div>
-				<span className="text-sm font-semibold text-blue-600">
-					{skill.level}
-				</span>
-			</div>
 
-			{/* The Bar Container */}
-			<div className="h-4 w-full overflow-hidden rounded-full bg-neutral-100">
-				<motion.div
-					initial={{ width: 0 }}
-					whileInView={{ width: `${skill.percentage}%` }}
-					viewport={{ once: true }}
-					transition={{
-						duration: 1.5,
-						ease: "easeOut",
-						delay: index * 0.2,
-					}}
-					className="h-full rounded-full bg-blue-600"
-				/>
+				{/* 2. The Animated Border Overlay */}
+				<svg
+					className="absolute inset-0 h-full w-full pointer-events-none rounded-xl"
+					style={{ overflow: "visible" }}
+				>
+					<motion.rect
+						initial={{ pathLength: 0, opacity: 0 }}
+						whileInView={{ pathLength: 1, opacity: 1 }} // Changed to 1 (100%)
+						viewport={{ once: true }}
+						transition={{
+							duration: 1.5,
+							ease: "easeOut",
+							delay: index * 0.2, // Stagger effect
+						}}
+						width="100%"
+						height="100%"
+						rx="12" // Matches container rounded-xl
+						ry="12"
+						fill="transparent"
+						stroke="#052f4a" // Tailwind blue-600
+						strokeWidth="3"
+						strokeLinecap="round"
+						className="drop-shadow-sm"
+					/>
+				</svg>
 			</div>
 		</div>
 	);

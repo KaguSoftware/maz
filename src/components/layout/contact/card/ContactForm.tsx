@@ -1,0 +1,166 @@
+// src/components/layout/contact/card/ContactForm.tsx
+"use client";
+
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { motion, AnimatePresence } from "motion/react";
+import { Loader2, CheckCircle2 } from "lucide-react";
+import { useTranslations } from "next-intl";
+
+import { FORMCONTENT } from "./constants";
+import { sendContactEmail } from "@/src/app/actions";
+import { contactFormSchema, ContactFormValues } from "@/src/lib/schemas";
+
+const ContactForm = () => {
+	const t = useTranslations();
+	const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+
+	// 1. Initialize the form with Zod
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors, isSubmitting },
+	} = useForm<ContactFormValues>({
+		resolver: zodResolver(contactFormSchema),
+	});
+
+	// 2. The cleaner submit handler
+	const onSubmit = async (data: ContactFormValues) => {
+		const result = await sendContactEmail(data);
+
+		if (result?.success) {
+			setStatus("success");
+			reset(); // Clear the form
+			setTimeout(() => setStatus("idle"), 3000);
+		} else {
+			console.error(result?.error);
+			setStatus("error");
+			setTimeout(() => setStatus("idle"), 3000);
+		}
+	};
+
+	return (
+		<div className="bg-white/10 p-8 rounded-3xl border border-white/10 backdrop-blur-md h-fit w-full overflow-hidden relative min-h-100">
+			<AnimatePresence mode="wait">
+				{status === "success" ? (
+					// SUCCESS VIEW
+					<motion.div
+						key="success"
+						initial={{ opacity: 0, y: 10, scale: 0.95 }}
+						animate={{ opacity: 1, y: 0, scale: 1 }}
+						exit={{ opacity: 0, y: -10, scale: 0.95 }}
+						transition={{ duration: 0.4, ease: "easeOut" }}
+						className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 h-full"
+					>
+						<motion.div
+							initial={{ scale: 0, rotate: -45 }}
+							animate={{ scale: 1, rotate: 0 }}
+							transition={{
+								type: "spring",
+								stiffness: 200,
+								damping: 15,
+								delay: 0.1,
+							}}
+						>
+							<CheckCircle2 className="w-20 h-20 text-logocolor mb-4" />
+						</motion.div>
+						<h3 className="text-2xl font-bold text-white mb-2">
+							{t("Contact.Form.status.successTitle")}
+						</h3>
+						<p className="text-neutral-300">
+							{t("Contact.Form.status.successDesc")}
+						</p>
+					</motion.div>
+				) : (
+					// FORM VIEW
+					<motion.div
+						key="form"
+						initial={{ opacity: 0, x: -20 }}
+						animate={{ opacity: 1, x: 0 }}
+						exit={{ opacity: 0, x: 20 }}
+						transition={{ duration: 0.3 }}
+					>
+						<div className="mb-6">
+							<h2 className="text-2xl font-bold text-white mb-1">
+								{t(FORMCONTENT.title)}
+							</h2>
+						</div>
+
+						<form
+							onSubmit={handleSubmit(onSubmit)}
+							className="flex flex-col gap-5"
+						>
+							{FORMCONTENT.fields.map((field, index) => (
+								<div
+									key={index}
+									className="flex flex-col gap-2"
+								>
+									<label className="text-sm font-medium text-neutral-300 ml-1">
+										{t(field.label)}
+									</label>
+
+									{field.type === "textarea" ? (
+										<textarea
+											{...register(
+												field.name as keyof ContactFormValues
+											)}
+											placeholder={t(field.placeholder)}
+											rows={4}
+											className="bg-black/20 border border-white/10 rounded-xl p-3 text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-logocolor resize-none transition-all"
+										/>
+									) : (
+										<input
+											type={field.type}
+											{...register(
+												field.name as keyof ContactFormValues
+											)}
+											placeholder={t(field.placeholder)}
+											className="bg-black/20 border border-white/10 rounded-xl p-3 text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-logocolor transition-all"
+										/>
+									)}
+									{/* Error Message Display */}
+									{errors[
+										field.name as keyof ContactFormValues
+									] && (
+										<span className="text-red-400 text-xs ml-1">
+											{
+												errors[
+													field.name as keyof ContactFormValues
+												]?.message
+											}
+										</span>
+									)}
+								</div>
+							))}
+
+							<button
+								type="submit"
+								disabled={isSubmitting}
+								className={`mt-2 py-3 px-6 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
+									status === "error"
+										? "bg-red-500 text-white"
+										: "bg-white text-black hover:bg-neutral-200"
+								}`}
+							>
+								{isSubmitting ? (
+									<>
+										<Loader2 className="w-5 h-5 animate-spin" />
+										{t("Contact.Form.status.sending")}
+									</>
+								) : status === "error" ? (
+									t("Contact.Form.status.failed")
+								) : (
+									t(FORMCONTENT.buttonText)
+								)}
+							</button>
+						</form>
+					</motion.div>
+				)}
+			</AnimatePresence>
+		</div>
+	);
+};
+
+export default ContactForm;

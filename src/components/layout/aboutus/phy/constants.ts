@@ -1,24 +1,28 @@
 // src/lib/constants.ts
-import { Ruler, ShieldCheck, LightbulbIcon } from "lucide-react";
-import { PhilosophyItem } from "./types";
+import { LightbulbIcon, Target, BrickWallShieldIcon } from "lucide-react";
+import { PhilosophyItem, PhyItem } from "./types";
 
 export const PHILOSOPHY_DATA: PhilosophyItem[] = [
 	{
 		icon: LightbulbIcon,
-		header: "Direct Involvement",
+		header: "AboutUs.Philosophy.items.involvement.header",
 		description:
-			"I don't outsource critical thinking. I perform the measuring, I draw the plans, and I manage the site personally.",
+			"AboutUs.Philosophy.items.involvement.description",
 	},
 	{
-		icon: Ruler,
-		header: "Precision Planning",
+		icon: Target,
+		header: "AboutUs.Philosophy.items.accuracy.header",
 		description:
-			"I ensure every measurement is exact and every plan is drawn to perfection before breaking ground.",
+			"AboutUs.Philosophy.items.accuracy.description",
 	},
 	{
-		icon: ShieldCheck,
-		header: "Safety & Quality",
+		icon: BrickWallShieldIcon,
+		header: "AboutUs.Philosophy.items.sustainability.header",
 		description:
-			"Safety is not a checklist, it's a culture. I ensure the site is secure and the materials are top tier.",
+			"AboutUs.Philosophy.items.sustainability.description",
 	},
 ];
+export const PHY_DATA: PhyItem = {
+	header: "AboutUs.Philosophy.header",
+	desc: "AboutUs.Philosophy.desc",
+};
