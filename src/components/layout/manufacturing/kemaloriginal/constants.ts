@@ -51,8 +51,8 @@ export const RightImages_RightCol: RightCard[] = [
     },
     {
         Image: {
-            alt: "Construction View",
-            src: "/6m.webp",
+            alt: "Limestone Hardscape",
+            src: "/28s.webp",
             height: 400,
             width: 400,
         },
